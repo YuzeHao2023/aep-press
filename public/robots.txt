@@ -1,0 +1,22 @@
+User-agent: *
+Allow: /
+Allow: /content/
+
+User-agent: Googlebot
+Allow: /
+
+User-agent: Googlebot-Mobile
+Allow: /
+
+User-agent: Googlebot-Image
+Allow: /
+
+User-agent: Mediapartners-Google
+Allow: /
+
+User-agent: AdsBot-Google
+Allow: /
+
+User-agent: Google-Scholar
+Allow: /
+Allow: /content/journals/
