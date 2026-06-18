@@ -18,14 +18,20 @@ export const ArticleDetail = () => {
     );
   }
 
-  const fullPdfUrl = window.location.origin + article.pdfUrl;
+  const currentUrl = window.location.href;
+  const fullPdfUrl = new URL(article.pdfUrl, window.location.origin).toString();
 
   return (
     <div className="bg-slate-50 min-h-screen pb-20">
       <Helmet>
         <title>{article.title} | {journal.title}</title>
+        <link rel="canonical" href={currentUrl} />
         <meta name="description" content={article.abstract} />
-        
+        <meta property="og:title" content={article.title} />
+        <meta property="og:description" content={article.abstract} />
+        <meta property="og:type" content="article" />
+        <meta property="og:url" content={window.location.href} />
+
         {/* Google Scholar Meta Tags (Highwire Press) */}
         <meta name="citation_title" content={article.title} />
         {article.authors.map(author => (
@@ -39,11 +45,35 @@ export const ArticleDetail = () => {
         <meta name="citation_lastpage" content={article.lastPage} />
         <meta name="citation_doi" content={article.doi} />
         <meta name="citation_pdf_url" content={fullPdfUrl} />
-        <meta name="citation_abstract_html_url" content={window.location.href} />
+        <meta name="citation_abstract_html_url" content={currentUrl} />
+        <meta name="citation_fulltext_html_url" content={currentUrl} />
         <meta name="citation_language" content="en" />
+        <meta name="citation_abstract" content={article.abstract} />
+        <meta name="citation_publisher" content="AEP Press" />
+        <meta name="citation_issn" content={journal.issn} />
         {article.keywords.map(keyword => (
           <meta key={keyword} name="citation_keywords" content={keyword} />
         ))}
+        <script type="application/ld+json">
+          {JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'ScholarlyArticle',
+            headline: article.title,
+            author: article.authors.map(author => ({ '@type': 'Person', name: author })),
+            description: article.abstract,
+            datePublished: article.publicationDate,
+            isPartOf: {
+              '@type': 'Periodical',
+              name: article.journalTitle,
+              volumeNumber: article.volume,
+              issueNumber: article.issue,
+            },
+            pagination: `${article.firstPage}-${article.lastPage}`,
+            identifier: article.doi,
+            url: currentUrl,
+            sameAs: [fullPdfUrl],
+          })}
+        </script>
       </Helmet>
 
       {/* Breadcrumbs */}

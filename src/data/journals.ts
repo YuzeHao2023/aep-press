@@ -45,7 +45,7 @@ export const journals: Journal[] = [
         firstPage: "45",
         lastPage: "62",
         doi: "10.1234/ams.2024.001",
-        pdfUrl: "/content/journals/math-advances/v12i2/art-001.pdf",
+        pdfUrl: "/26.6.18/1-j.ijics.20251001.13(1).pdf",
         keywords: ["Dynamic Systems", "Convergence", "Non-linear Analysis"]
       }
     ]
